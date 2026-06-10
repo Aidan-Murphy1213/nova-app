@@ -3,52 +3,52 @@ import { useState, useEffect } from "react";
 // ── Stock Dataset ──────────────────────────────────────────────────────────────
 const STOCKS = {
   Technology: [
-    { ticker: "AAPL", name: "Apple Inc.", risk: "low", dividendYield: 0.5, growth: "moderate", cap: "large", description: "World's largest company by market cap; stable, diversified revenue across hardware and services." },
-    { ticker: "MSFT", name: "Microsoft Corp.", risk: "low", dividendYield: 0.8, growth: "high", cap: "large", description: "Cloud computing leader with consistent earnings growth and strong dividend history." },
-    { ticker: "GOOGL", name: "Alphabet Inc.", risk: "moderate", dividendYield: 0, growth: "high", cap: "large", description: "Dominant in digital advertising and rapidly expanding in cloud and AI." },
-    { ticker: "NVDA", name: "NVIDIA Corp.", risk: "high", dividendYield: 0.1, growth: "very high", cap: "large", description: "Leading AI chip manufacturer with explosive growth potential and high volatility." },
+    { ticker: "AAPL", name: "Apple Inc.", risk: "low", dividendYield: 0.35, growth: "moderate", cap: "large", description: "World's largest company by market cap; stable, diversified revenue across hardware and services." },
+    { ticker: "MSFT", name: "Microsoft Corp.", risk: "low", dividendYield: 0.88, growth: "high", cap: "large", description: "Cloud computing leader with consistent earnings growth and strong dividend history." },
+    { ticker: "GOOGL", name: "Alphabet Inc.", risk: "moderate", dividendYield: 0.23, growth: "high", cap: "large", description: "Dominant in digital advertising and rapidly expanding in cloud and AI." },
+    { ticker: "NVDA", name: "NVIDIA Corp.", risk: "high", dividendYield: 0.5, growth: "very high", cap: "large", description: "Leading AI chip manufacturer with explosive growth potential and high volatility." },
     { ticker: "CRM", name: "Salesforce Inc.", risk: "moderate", dividendYield: 0, growth: "high", cap: "large", description: "Enterprise software leader in CRM with strong recurring revenue model." },
     { ticker: "AMD", name: "Advanced Micro Devices", risk: "high", dividendYield: 0, growth: "very high", cap: "mid", description: "High-growth semiconductor company competing directly with Intel and NVIDIA." },
   ],
   Healthcare: [
-    { ticker: "JNJ", name: "Johnson & Johnson", risk: "low", dividendYield: 3.1, growth: "low", cap: "large", description: "Diversified healthcare giant with 60+ years of consecutive dividend increases." },
-    { ticker: "UNH", name: "UnitedHealth Group", risk: "low", dividendYield: 1.5, growth: "moderate", cap: "large", description: "Largest U.S. health insurer with consistent earnings and strong cash flow." },
-    { ticker: "PFE", name: "Pfizer Inc.", risk: "moderate", dividendYield: 5.8, growth: "low", cap: "large", description: "Global pharmaceutical leader offering one of the highest dividend yields in healthcare." },
-    { ticker: "ABBV", name: "AbbVie Inc.", risk: "moderate", dividendYield: 4.2, growth: "moderate", cap: "large", description: "Biopharmaceutical company known for strong pipeline and high dividend yield." },
+    { ticker: "JNJ", name: "Johnson & Johnson", risk: "low", dividendYield: 2.3, growth: "low", cap: "large", description: "Diversified healthcare giant with 60+ years of consecutive dividend increases." },
+    { ticker: "UNH", name: "UnitedHealth Group", risk: "low", dividendYield: 2.19, growth: "moderate", cap: "large", description: "Largest U.S. health insurer with consistent earnings and strong cash flow." },
+    { ticker: "PFE", name: "Pfizer Inc.", risk: "moderate", dividendYield: 6.7, growth: "low", cap: "large", description: "Global pharmaceutical leader offering one of the highest dividend yields in healthcare." },
+    { ticker: "ABBV", name: "AbbVie Inc.", risk: "moderate", dividendYield: 3.1, growth: "moderate", cap: "large", description: "Biopharmaceutical company known for strong pipeline and high dividend yield." },
     { ticker: "ISRG", name: "Intuitive Surgical", risk: "moderate", dividendYield: 0, growth: "high", cap: "large", description: "Leader in robotic-assisted surgery with strong growth prospects in medical tech." },
     { ticker: "VEEV", name: "Veeva Systems", risk: "moderate", dividendYield: 0, growth: "high", cap: "mid", description: "Cloud software provider for life sciences — fast-growing niche with high margins." },
   ],
   Energy: [
-    { ticker: "XOM", name: "ExxonMobil Corp.", risk: "moderate", dividendYield: 3.4, growth: "low", cap: "large", description: "Largest U.S. oil company with a long track record of dividend payments." },
-    { ticker: "CVX", name: "Chevron Corp.", risk: "moderate", dividendYield: 4.1, growth: "low", cap: "large", description: "Integrated energy major with strong balance sheet and consistent dividends." },
+    { ticker: "XOM", name: "ExxonMobil Corp.", risk: "moderate", dividendYield: 2.77, growth: "low", cap: "large", description: "Largest U.S. oil company with a long track record of dividend payments." },
+    { ticker: "CVX", name: "Chevron Corp.", risk: "moderate", dividendYield: 3.73, growth: "low", cap: "large", description: "Integrated energy major with strong balance sheet and consistent dividends." },
     { ticker: "NEE", name: "NextEra Energy", risk: "low", dividendYield: 2.9, growth: "moderate", cap: "large", description: "World's largest renewable energy producer — stable utility with growth potential." },
-    { ticker: "SLB", name: "Schlumberger Ltd.", risk: "high", dividendYield: 2.5, growth: "moderate", cap: "large", description: "Global oilfield services leader tied closely to oil price cycles." },
+    { ticker: "SLB", name: "Schlumberger Ltd.", risk: "high", dividendYield: 2.09, growth: "moderate", cap: "large", description: "Global oilfield services leader tied closely to oil price cycles." },
     { ticker: "FSLR", name: "First Solar Inc.", risk: "high", dividendYield: 0, growth: "high", cap: "mid", description: "Leading U.S. solar panel manufacturer benefiting from clean energy transition." },
-    { ticker: "OXY", name: "Occidental Petroleum", risk: "high", dividendYield: 1.8, growth: "moderate", cap: "large", description: "Oil and gas producer with significant Permian Basin exposure and Warren Buffett backing." },
+    { ticker: "OXY", name: "Occidental Petroleum", risk: "high", dividendYield: 1.77, growth: "moderate", cap: "large", description: "Oil and gas producer with significant Permian Basin exposure and Warren Buffett backing." },
   ],
   Financials: [
-    { ticker: "JPM", name: "JPMorgan Chase", risk: "low", dividendYield: 2.4, growth: "moderate", cap: "large", description: "Largest U.S. bank with diversified revenue streams and strong dividend history." },
-    { ticker: "BAC", name: "Bank of America", risk: "moderate", dividendYield: 2.6, growth: "moderate", cap: "large", description: "Second largest U.S. bank with improving efficiency and consistent dividend growth." },
+    { ticker: "JPM", name: "JPMorgan Chase", risk: "low", dividendYield: 1.92, growth: "moderate", cap: "large", description: "Largest U.S. bank with diversified revenue streams and strong dividend history." },
+    { ticker: "BAC", name: "Bank of America", risk: "moderate", dividendYield: 2.08, growth: "moderate", cap: "large", description: "Second largest U.S. bank with improving efficiency and consistent dividend growth." },
     { ticker: "BRK.B", name: "Berkshire Hathaway B", risk: "low", dividendYield: 0, growth: "moderate", cap: "large", description: "Warren Buffett's holding company — highly diversified and historically stable." },
-    { ticker: "V", name: "Visa Inc.", risk: "low", dividendYield: 0.8, growth: "high", cap: "large", description: "Global payments network with near-monopolistic position and consistent growth." },
-    { ticker: "MA", name: "Mastercard Inc.", risk: "low", dividendYield: 0.6, growth: "high", cap: "large", description: "Second largest global payments network with strong international growth." },
-    { ticker: "SCHW", name: "Charles Schwab Corp.", risk: "moderate", dividendYield: 1.6, growth: "moderate", cap: "large", description: "Leading brokerage and banking firm benefiting from rising interest rates." },
+    { ticker: "V", name: "Visa Inc.", risk: "low", dividendYield: 0.86, growth: "high", cap: "large", description: "Global payments network with near-monopolistic position and consistent growth." },
+    { ticker: "MA", name: "Mastercard Inc.", risk: "low", dividendYield: 0.7, growth: "high", cap: "large", description: "Second largest global payments network with strong international growth." },
+    { ticker: "SCHW", name: "Charles Schwab Corp.", risk: "moderate", dividendYield: 1.44, growth: "moderate", cap: "large", description: "Leading brokerage and banking firm benefiting from rising interest rates." },
   ],
   Utilities: [
-    { ticker: "DUK", name: "Duke Energy Corp.", risk: "low", dividendYield: 4.2, growth: "low", cap: "large", description: "One of the largest U.S. electric utilities — extremely stable with high dividends." },
-    { ticker: "SO", name: "Southern Company", risk: "low", dividendYield: 4.0, growth: "low", cap: "large", description: "Major southeastern U.S. utility known for reliable dividends and regulated operations." },
-    { ticker: "AEP", name: "American Electric Power", risk: "low", dividendYield: 4.5, growth: "low", cap: "large", description: "Large transmission utility with one of the highest dividend yields in the sector." },
-    { ticker: "AWK", name: "American Water Works", risk: "low", dividendYield: 2.1, growth: "moderate", cap: "large", description: "Largest U.S. water utility — recession-proof with steady long-term growth." },
-    { ticker: "WEC", name: "WEC Energy Group", risk: "low", dividendYield: 3.8, growth: "low", cap: "large", description: "Midwest utility with consistent dividend growth and clean energy transition focus." },
-    { ticker: "ES", name: "Eversource Energy", risk: "low", dividendYield: 4.8, growth: "low", cap: "mid", description: "New England utility offering one of the highest yields in the sector." },
+    { ticker: "DUK", name: "Duke Energy Corp.", risk: "low", dividendYield: 3.43, growth: "low", cap: "large", description: "One of the largest U.S. electric utilities — extremely stable with high dividends." },
+    { ticker: "SO", name: "Southern Company", risk: "low", dividendYield: 3.28, growth: "low", cap: "large", description: "Major southeastern U.S. utility known for reliable dividends and regulated operations." },
+    { ticker: "AEP", name: "American Electric Power", risk: "low", dividendYield: 3.01, growth: "low", cap: "large", description: "Large transmission utility with one of the highest dividend yields in the sector." },
+    { ticker: "AWK", name: "American Water Works", risk: "low", dividendYield: 2.49, growth: "moderate", cap: "large", description: "Largest U.S. water utility — recession-proof with steady long-term growth." },
+    { ticker: "WEC", name: "WEC Energy Group", risk: "low", dividendYield: 3.38, growth: "low", cap: "large", description: "Midwest utility with consistent dividend growth and clean energy transition focus." },
+    { ticker: "ES", name: "Eversource Energy", risk: "low", dividendYield: 4.5, growth: "low", cap: "mid", description: "New England utility offering one of the highest yields in the sector." },
   ],
   Industrials: [
-    { ticker: "HON", name: "Honeywell International", risk: "low", dividendYield: 2.2, growth: "moderate", cap: "large", description: "Diversified industrial conglomerate with strong aerospace and building tech divisions." },
-    { ticker: "CAT", name: "Caterpillar Inc.", risk: "moderate", dividendYield: 1.6, growth: "moderate", cap: "large", description: "Global leader in construction and mining equipment with strong dividend history." },
-    { ticker: "UPS", name: "United Parcel Service", risk: "moderate", dividendYield: 4.5, growth: "moderate", cap: "large", description: "Global logistics leader with high dividend yield and e-commerce tailwinds." },
-    { ticker: "RTX", name: "RTX Corporation", risk: "moderate", dividendYield: 2.3, growth: "moderate", cap: "large", description: "Aerospace and defense giant with stable government contracts and growing commercial aviation." },
-    { ticker: "DE", name: "Deere & Company", risk: "moderate", dividendYield: 1.5, growth: "high", cap: "large", description: "Agricultural equipment leader with strong pricing power and smart farming technology." },
-    { ticker: "GWW", name: "W.W. Grainger", risk: "moderate", dividendYield: 0.9, growth: "high", cap: "mid", description: "Industrial supply distributor with consistent earnings growth and strong e-commerce pivot." },
+    { ticker: "HON", name: "Honeywell International", risk: "low", dividendYield: 2.23, growth: "moderate", cap: "large", description: "Diversified industrial conglomerate with strong aerospace and building tech divisions." },
+    { ticker: "CAT", name: "Caterpillar Inc.", risk: "moderate", dividendYield: 0.67, growth: "moderate", cap: "large", description: "Global leader in construction and mining equipment with strong dividend history." },
+    { ticker: "UPS", name: "United Parcel Service", risk: "moderate", dividendYield: 6.04, growth: "moderate", cap: "large", description: "Global logistics leader with high dividend yield and e-commerce tailwinds." },
+    { ticker: "RTX", name: "RTX Corporation", risk: "moderate", dividendYield: 1.57, growth: "moderate", cap: "large", description: "Aerospace and defense giant with stable government contracts and growing commercial aviation." },
+    { ticker: "DE", name: "Deere & Company", risk: "moderate", dividendYield: 1.1, growth: "high", cap: "large", description: "Agricultural equipment leader with strong pricing power and smart farming technology." },
+    { ticker: "GWW", name: "W.W. Grainger", risk: "moderate", dividendYield: 0.83, growth: "high", cap: "mid", description: "Industrial supply distributor with consistent earnings growth and strong e-commerce pivot." },
   ],
 };
 
@@ -116,18 +116,15 @@ function buildPortfolio(profile) {
   const allocationMap = {};
   const stockPicks = {};
 
-  const getConviction = (ind) => profile.industryWeights?.[ind] ?? 50;
-  const totalConviction = preferredIndustries.reduce((sum, ind) => sum + getConviction(ind), 0) || 1;
   const otherIndustries = ALL_INDUSTRIES.filter(i => !preferredIndustries.includes(i) && !avoided.includes(i));
   const otherWeight = otherIndustries.length > 0 ? 30 / otherIndustries.length : 0;
+  const preferredWeight = preferredIndustries.length > 0 ? 70 / preferredIndustries.length : 0;
 
   const industriesToUse = [...preferredIndustries, ...otherIndustries.slice(0, Math.max(0, 6 - preferredIndustries.length))];
 
   industriesToUse.forEach((ind) => {
     const isPreferred = preferredIndustries.includes(ind);
-    allocationMap[ind] = isPreferred
-      ? Math.round((getConviction(ind) / totalConviction) * 70)
-      : Math.round(otherWeight);
+    allocationMap[ind] = Math.round(isPreferred ? preferredWeight : otherWeight);
   });
 
   // Normalize to 100%
@@ -589,7 +586,7 @@ function SummaryCard({ label, value, valueColor, sub, ring, detail }) {
 }
 
 // ── Stock Card with hover more info ──────────────────────────────────────────
-function StockCard({ stock, rl, reason, allocPerStock, profile, riskScore }) {
+function StockCard({ stock, rl, reason, profile, riskScore }) {
   const [showInfo, setShowInfo] = useState(false);
 
   const insights = {
@@ -648,10 +645,7 @@ function StockCard({ stock, rl, reason, allocPerStock, profile, riskScore }) {
               <span style={{ fontSize: 11, fontWeight: 700, color: C.textMuted, background: "#1E2D45", padding: "3px 8px", borderRadius: 6 }}>{stock.cap}-cap</span>
             </div>
           </div>
-          <div style={{ textAlign: "right" }}>
-            <div style={{ fontSize: 16, fontWeight: 900, color: C.text }}>${allocPerStock.toLocaleString()}</div>
-            <div style={{ fontSize: 11, color: C.textMuted }}>suggested allocation</div>
-          </div>
+
         </div>
         <p style={{ fontSize: 13, color: C.textMuted, margin: "8px 0 10px", lineHeight: 1.5 }}>{stock.description}</p>
 
@@ -695,7 +689,7 @@ export default function App() {
   const [step, setStep] = useState(0);
   const [profile, setProfile] = useState({
     name: "", equity: "1000", goal: "", riskTolerance: "", timeline: "", dividendFocus: false,
-    incomeStyle: "", investmentStyle: "", industries: [], avoidIndustries: [], industryWeights: {},
+    incomeStyle: "", investmentStyle: "", industries: [], avoidIndustries: [],
   });
   const [portfolio, setPortfolio] = useState(null);
   const [expandedIndustry, setExpandedIndustry] = useState(null);
@@ -720,7 +714,7 @@ export default function App() {
   };
 
   const back = () => { setStep(s => s - 1); window.scrollTo({ top: 0, behavior: "smooth" }); };
-  const restart = () => { setStep(0); setProfile({ name: "", equity: "1000", goal: "", riskTolerance: "", timeline: "", dividendFocus: false, incomeStyle: "", investmentStyle: "", industries: [], avoidIndustries: [], industryWeights: {} }); setPortfolio(null); window.scrollTo({ top: 0, behavior: "smooth" }); };
+  const restart = () => { setStep(0); setProfile({ name: "", equity: "1000", goal: "", riskTolerance: "", timeline: "", dividendFocus: false, incomeStyle: "", investmentStyle: "", industries: [], avoidIndustries: [] }); setPortfolio(null); window.scrollTo({ top: 0, behavior: "smooth" }); };
 
   const toggleIndustry = (ind) => {
     if (profile.industries.includes(ind)) up("industries", profile.industries.filter(i => i !== ind));
@@ -861,50 +855,135 @@ export default function App() {
                 <div style={{ fontSize: 13, color: C.textMuted, lineHeight: 1.6 }}>Your investable equity determines how many stocks we recommend and how broadly we can diversify your portfolio. A smaller starting amount calls for a focused, concentrated strategy — a larger one allows for more breadth.</div>
               </div>
 
-              {/* Goal */}
+              {/* Goal + Income Style (merged) */}
               <div>
                 <label style={{ display: "block", fontWeight: 700, marginBottom: 10, fontSize: 15 }}>What's Your Primary Investment Goal?</label>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
-                  {[
-                    {
-                      val: "growth", label: "Long-Term Growth", sub: "Build wealth over time",
-                      detail: "Your portfolio will favor high-growth stocks with strong upside potential. Expect higher volatility in exchange for greater long-term returns. Best paired with an aggressive or moderate risk tolerance and a long timeline.",
-                    },
-                    {
-                      val: "income", label: "Passive Income", sub: "Regular dividend payments",
-                      detail: "We'll prioritize stocks with strong, consistent dividend yields — companies that pay you regularly just for holding shares. Ideal for investors who want their portfolio to generate cash flow without selling positions.",
-                    },
-                    {
-                      val: "retirement", label: "Retirement", sub: "Steady, secure future",
-                      detail: "Your portfolio will lean toward stable, established companies with lower volatility and reliable performance. The goal is capital preservation and steady growth — protecting what you've built while still moving forward.",
-                    },
-                    {
-                      val: "balanced", label: "Balanced", sub: "Growth + income mix",
-                      detail: "A blend of growth-oriented and dividend-paying stocks. You get the upside of market appreciation alongside regular income — a well-rounded strategy suited for most beginner investors.",
-                    },
-                  ].map(o => <ExpandableOptionCard key={o.val} {...o} selected={profile.goal === o.val} onClick={() => up("goal", o.val)} />)}
-                </div>
+                {(() => {
+                  const disabledGoalsByRisk = {
+                    conservative: ["growth"],
+                    aggressive: ["retirement"],
+                    moderate: [],
+                  };
+                  const goalDisabledReasons = {
+                    growth: { conservative: "Conservative risk tolerance filters out the high-growth stocks needed to achieve this goal — the two work against each other." },
+                    retirement: { aggressive: "Retirement planning requires capital preservation — an aggressive risk profile is too volatile for a retirement-focused portfolio." },
+                  };
+                  const disabledGoals = disabledGoalsByRisk[profile.riskTolerance] || [];
+                  return (
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+                      {[
+                        { val: "growth", label: "Long-Term Growth", sub: "Maximize appreciation", color: C.accent, detail: "Your portfolio will favor high-growth stocks with strong upside potential. Expect higher volatility in exchange for greater long-term returns. Best paired with an aggressive or moderate risk tolerance and a long timeline." },
+                        { val: "income", label: "Passive Income", sub: "Prioritize dividend payments", color: C.emerald, detail: "We'll build your portfolio around stocks with strong, reliable dividend yields — companies that pay you regularly just for holding shares. Every pick will carry a dividend, generating steady cash flow without selling positions." },
+                        { val: "retirement", label: "Retirement", sub: "Stable, secure future", color: "#8B5CF6", detail: "Your portfolio will lean toward stable, established companies with lower volatility and reliable performance. The goal is capital preservation and steady growth — protecting what you've built while still moving forward." },
+                        { val: "balanced", label: "Balanced", sub: "Growth + income mix", color: C.amber, detail: "A blend of growth-oriented and dividend-paying stocks. You get the upside of market appreciation alongside regular income — a well-rounded strategy suited for most beginner investors." },
+                      ].map(o => {
+                        const isDisabled = disabledGoals.includes(o.val);
+                        const reason = goalDisabledReasons[o.val]?.[profile.riskTolerance];
+                        return (
+                          <div key={o.val} style={{ position: "relative" }}>
+                            <div style={{
+                              background: isDisabled ? "#0D1526" : profile.goal === o.val ? `${o.color}18` : C.card,
+                              border: `1.5px solid ${isDisabled ? "#1a2233" : profile.goal === o.val ? o.color : C.cardBorder}`,
+                              borderRadius: 12, padding: "16px 20px",
+                              cursor: isDisabled ? "not-allowed" : "pointer",
+                              opacity: isDisabled ? 0.4 : 1,
+                              transition: "all 0.18s",
+                              boxShadow: profile.goal === o.val && !isDisabled ? `0 0 16px ${o.color}30` : "none",
+                            }} onClick={() => {
+                              if (isDisabled) return;
+                              const disabledTimelinesByGoal = { growth: ["short"], income: ["long"], retirement: ["short"], balanced: [] };
+                              const newDisabledTimelines = disabledTimelinesByGoal[o.val] || [];
+                              up("goal", o.val);
+                              up("dividendFocus", o.val === "income");
+                              up("incomeStyle", o.val === "income" ? "income" : o.val === "growth" ? "growth" : "blend");
+                              if (profile.timeline && newDisabledTimelines.includes(profile.timeline)) up("timeline", "");
+                            }}>
+                              <div style={{ fontWeight: 700, color: isDisabled ? C.textSubtle : profile.goal === o.val ? o.color : C.text, fontSize: 15 }}>{o.label}</div>
+                              <div style={{ fontSize: 12, color: C.textMuted, marginTop: 4 }}>{o.sub}</div>
+                              {isDisabled && profile.riskTolerance && (
+                                <div style={{ fontSize: 11, color: C.red, marginTop: 6, lineHeight: 1.4 }}>✕ Not compatible with your risk tolerance</div>
+                              )}
+                            </div>
+                            {isDisabled && reason && (
+                              <div style={{ marginTop: 6, padding: "10px 12px", background: `${C.red}10`, border: `1px solid ${C.red}25`, borderRadius: 8, fontSize: 11, color: C.textMuted, lineHeight: 1.5 }}>
+                                {reason}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  );
+                })()}
               </div>
 
               {/* Risk */}
               <div>
                 <label style={{ display: "block", fontWeight: 700, marginBottom: 10, fontSize: 15 }}>How Comfortable Are You With Risk?</label>
-                <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                  {[
-                    {
-                      val: "conservative", label: "Conservative", sub: "I prefer stability. Slow and steady is fine with me.", color: C.emerald,
-                      detail: "We'll stick to large-cap, low-volatility stocks with proven track records — think established household names. Your portfolio won't swing dramatically, but it will grow steadily and reliably over time.",
+                {(() => {
+                  const disabledRiskByGoal = { growth: ["conservative"], retirement: ["aggressive"], income: [], balanced: [] };
+                  const disabledRiskByTimeline = { short: ["aggressive"], long: ["conservative"], medium: [] };
+                  const fromGoal = disabledRiskByGoal[profile.goal] || [];
+                  const fromTimeline = disabledRiskByTimeline[profile.timeline] || [];
+                  const disabledRisks = [...new Set([...fromGoal, ...fromTimeline])];
+                  const riskDisabledReasons = {
+                    conservative: {
+                      growth: "Conservative filtering removes the high-growth stocks your goal depends on.",
+                      long: "A 10+ year horizon gives your portfolio time to recover from volatility — conservative picks will significantly underperform over this period.",
                     },
-                    {
-                      val: "moderate", label: "Moderate", sub: "I'm okay with some ups and downs for better returns.", color: C.amber,
-                      detail: "A mix of stable blue-chip stocks and select growth opportunities. You'll experience some market fluctuation, but your portfolio is built to recover and grow — balancing protection with upside.",
+                    aggressive: {
+                      retirement: "High volatility is incompatible with the capital preservation that retirement planning requires.",
+                      short: "Aggressive picks can drop sharply in the short term — with only 1–3 years, there's no time to recover from a downturn.",
                     },
-                    {
-                      val: "aggressive", label: "Aggressive", sub: "I can handle big swings. I'm chasing maximum growth.", color: C.red,
-                      detail: "Your portfolio will include high-growth stocks with significant upside — and higher short-term volatility. This approach is best suited for investors with a long timeline who won't panic during market dips.",
-                    },
-                  ].map(o => <ExpandableOptionCard key={o.val} {...o} selected={profile.riskTolerance === o.val} onClick={() => up("riskTolerance", o.val)} />)}
-                </div>
+                  };
+                  const getRiskReason = (val) => riskDisabledReasons[val]?.[profile.goal] || riskDisabledReasons[val]?.[profile.timeline];
+                  return (
+                    <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                      {[
+                        { val: "conservative", label: "Conservative", sub: "I prefer stability. Slow and steady is fine with me.", color: C.emerald, detail: "We'll stick to large-cap, low-volatility stocks with proven track records — think established household names. Your portfolio won't swing dramatically, but it will grow steadily and reliably over time." },
+                        { val: "moderate", label: "Moderate", sub: "I'm okay with some ups and downs for better returns.", color: C.amber, detail: "A mix of stable blue-chip stocks and select growth opportunities. You'll experience some market fluctuation, but your portfolio is built to recover and grow — balancing protection with upside." },
+                        { val: "aggressive", label: "Aggressive", sub: "I can handle big swings. I'm chasing maximum growth.", color: C.red, detail: "Your portfolio will include high-growth stocks with significant upside — and higher short-term volatility. This approach is best suited for investors with a long timeline who won't panic during market dips." },
+                      ].map(o => {
+                        const isDisabled = disabledRisks.includes(o.val);
+                        const reason = getRiskReason(o.val);
+                        return (
+                          <div key={o.val} style={{ position: "relative" }}>
+                            <div style={{
+                              background: isDisabled ? "#0D1526" : profile.riskTolerance === o.val ? `${o.color}18` : C.card,
+                              border: `1.5px solid ${isDisabled ? "#1a2233" : profile.riskTolerance === o.val ? o.color : C.cardBorder}`,
+                              borderRadius: 12, padding: "16px 20px",
+                              cursor: isDisabled ? "not-allowed" : "pointer",
+                              opacity: isDisabled ? 0.4 : 1,
+                              transition: "all 0.18s",
+                              boxShadow: profile.riskTolerance === o.val && !isDisabled ? `0 0 16px ${o.color}30` : "none",
+                            }} onClick={() => {
+                              if (isDisabled) return;
+                              const disabledGoalsByRisk = { conservative: ["growth"], aggressive: ["retirement"], moderate: [] };
+                              const newDisabledGoals = disabledGoalsByRisk[o.val] || [];
+                              up("riskTolerance", o.val);
+                              if (profile.goal && newDisabledGoals.includes(profile.goal)) {
+                                up("goal", "");
+                                up("dividendFocus", false);
+                                up("incomeStyle", "");
+                              }
+                            }}>
+                              <div style={{ fontWeight: 700, color: isDisabled ? C.textSubtle : profile.riskTolerance === o.val ? o.color : C.text, fontSize: 15 }}>{o.label}</div>
+                              <div style={{ fontSize: 12, color: C.textMuted, marginTop: 4 }}>{o.sub}</div>
+                              {isDisabled && (profile.goal || profile.timeline) && (
+                                <div style={{ fontSize: 11, color: C.red, marginTop: 6, lineHeight: 1.4 }}>✕ Not compatible with your {profile.goal && fromGoal.includes(o.val) ? "goal" : "timeline"}</div>
+                              )}
+                            </div>
+                            {isDisabled && reason && (
+                              <div style={{ marginTop: 6, padding: "10px 12px", background: `${C.red}10`, border: `1px solid ${C.red}25`, borderRadius: 8, fontSize: 11, color: C.textMuted, lineHeight: 1.5 }}>
+                                {reason}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  );
+                })()}
               </div>
 
               {/* Why we ask — risk */}
@@ -916,22 +995,73 @@ export default function App() {
               {/* Timeline */}
               <div>
                 <label style={{ display: "block", fontWeight: 700, marginBottom: 10, fontSize: 15 }}>What's Your Investment Timeline?</label>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10 }}>
-                  {[
-                    {
-                      val: "short", label: "Short Term", sub: "1–3 years",
-                      detail: "With a shorter window, capital preservation becomes the priority. We'll favor stable, lower-risk picks that are less likely to dip significantly right when you may need the money.",
+                {(() => {
+                  const disabledByGoal = { growth: ["short"], income: ["long"], retirement: ["short"], balanced: [] };
+                  const disabledByRisk = { aggressive: ["short"], conservative: ["long"], moderate: [] };
+                  const fromGoal = disabledByGoal[profile.goal] || [];
+                  const fromRisk = disabledByRisk[profile.riskTolerance] || [];
+                  const disabled = [...new Set([...fromGoal, ...fromRisk])];
+                  const disabledReasons = {
+                    short: {
+                      growth: "Long-Term Growth requires time to compound — a 1–3 year window isn't enough to realize meaningful appreciation.",
+                      retirement: "Retirement planning needs a longer runway to build and preserve wealth effectively.",
+                      aggressive: "Aggressive picks can drop sharply in the short term — with only 1–3 years, there's no time to recover from a downturn.",
                     },
-                    {
-                      val: "medium", label: "Medium Term", sub: "3–10 years",
-                      detail: "A balanced timeline that allows for moderate growth strategies. Your portfolio has time to recover from short-term dips while still benefiting from compounding returns.",
+                    long: {
+                      income: "Passive Income strategies focus on near-term dividend cash flow — a 10+ year horizon is better suited to a growth goal.",
+                      conservative: "A 10+ year horizon gives your portfolio time to absorb volatility — conservative picks will significantly underperform over this period.",
                     },
-                    {
-                      val: "long", label: "Long Term", sub: "10+ years",
-                      detail: "The longer your horizon, the more risk you can absorb. Long-term investors benefit most from compounding growth — short-term market swings matter far less when you have a decade or more to let your portfolio grow.",
-                    },
-                  ].map(o => <ExpandableOptionCard key={o.val} {...o} selected={profile.timeline === o.val} onClick={() => up("timeline", o.val)} />)}
-                </div>
+                  };
+                  const getReason = (val) => disabledReasons[val]?.[profile.goal] || disabledReasons[val]?.[profile.riskTolerance];
+                  const getConflictLabel = (val) => {
+                    if (fromGoal.includes(val) && fromRisk.includes(val)) return "goal and risk tolerance";
+                    if (fromGoal.includes(val)) return "goal";
+                    return "risk tolerance";
+                  };
+                  return (
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10 }}>
+                      {[
+                        { val: "short", label: "Short Term", sub: "1–3 years" },
+                        { val: "medium", label: "Medium Term", sub: "3–10 years" },
+                        { val: "long", label: "Long Term", sub: "10+ years" },
+                      ].map(o => {
+                        const isDisabled = disabled.includes(o.val);
+                        const reason = getReason(o.val);
+                        return (
+                          <div key={o.val} style={{ position: "relative" }}>
+                            <div style={{
+                              background: isDisabled ? "#0D1526" : profile.timeline === o.val ? `${C.accent}18` : C.card,
+                              border: `1.5px solid ${isDisabled ? "#1a2233" : profile.timeline === o.val ? C.accent : C.cardBorder}`,
+                              borderRadius: 12, padding: "16px 20px",
+                              cursor: isDisabled ? "not-allowed" : "pointer",
+                              opacity: isDisabled ? 0.4 : 1,
+                              transition: "all 0.18s",
+                              boxShadow: profile.timeline === o.val && !isDisabled ? `0 0 16px ${C.accent}30` : "none",
+                            }} onClick={() => {
+                              if (isDisabled) return;
+                              up("timeline", o.val);
+                              // clear risk if newly incompatible
+                              const disabledRiskByTimeline = { short: ["aggressive"], long: ["conservative"], medium: [] };
+                              const newDisabledRisks = disabledRiskByTimeline[o.val] || [];
+                              if (profile.riskTolerance && newDisabledRisks.includes(profile.riskTolerance)) up("riskTolerance", "");
+                            }}>
+                              <div style={{ fontWeight: 700, color: isDisabled ? C.textSubtle : profile.timeline === o.val ? C.accent : C.text, fontSize: 15 }}>{o.label}</div>
+                              <div style={{ fontSize: 12, color: C.textMuted, marginTop: 4 }}>{o.sub}</div>
+                              {isDisabled && (profile.goal || profile.riskTolerance) && (
+                                <div style={{ fontSize: 11, color: C.red, marginTop: 6, lineHeight: 1.4 }}>✕ Not compatible with your {getConflictLabel(o.val)}</div>
+                              )}
+                            </div>
+                            {isDisabled && reason && (
+                              <div style={{ marginTop: 6, padding: "10px 12px", background: `${C.red}10`, border: `1px solid ${C.red}25`, borderRadius: 8, fontSize: 11, color: C.textMuted, lineHeight: 1.5 }}>
+                                {reason}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  );
+                })()}
               </div>
 
               {/* Why we ask — timeline */}
@@ -959,33 +1089,6 @@ export default function App() {
 
             <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
 
-              {/* Income Style — card options replacing checkbox */}
-              <div>
-                <label style={{ display: "block", fontWeight: 700, marginBottom: 10, fontSize: 15 }}>What's Your Income Style?</label>
-                <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                  {[
-                    {
-                      val: "growth", label: "Pure Growth", sub: "Maximize long-term appreciation", color: C.accent,
-                      detail: "We'll focus entirely on stocks with high growth potential. Dividends are secondary — the goal is to grow the value of your portfolio over time through price appreciation.",
-                    },
-                    {
-                      val: "income", label: "Income First", sub: "Prioritize dividend-paying stocks", color: C.emerald,
-                      detail: "Your portfolio will be built around stocks with strong, reliable dividend yields. These companies pay you regularly just for holding their shares — great for building passive income streams.",
-                    },
-                    {
-                      val: "blend", label: "Balanced Blend", sub: "Growth + income in equal measure", color: "#8B5CF6",
-                      detail: "A mix of both worlds — some high-growth picks alongside dividend payers. This gives you portfolio appreciation over time while still generating regular income along the way.",
-                    },
-                  ].map(o => <ExpandableOptionCard key={o.val} {...o} selected={profile.incomeStyle === o.val} onClick={() => { up("incomeStyle", o.val); up("dividendFocus", o.val === "income"); }} />)}
-                </div>
-              </div>
-
-              {/* Why we ask — income style */}
-              <div style={{ background: `${C.accent}10`, border: `1px solid ${C.accent}28`, borderRadius: 12, padding: "13px 16px" }}>
-                <div style={{ fontSize: 12, color: C.accent, fontWeight: 700, marginBottom: 4, textTransform: "uppercase", letterSpacing: 1 }}>✦ Why We Ask This</div>
-                <div style={{ fontSize: 13, color: C.textMuted, lineHeight: 1.6 }}>Your income style shapes which stocks make the cut. A growth focus filters toward high-performing companies with reinvested earnings — an income focus brings in dividend payers that reward you consistently.</div>
-              </div>
-
               {/* Investment Style */}
               <div>
                 <label style={{ display: "block", fontWeight: 700, marginBottom: 10, fontSize: 15 }}>How Hands-On Do You Want to Be?</label>
@@ -1007,45 +1110,6 @@ export default function App() {
               <div style={{ background: `${C.accent}10`, border: `1px solid ${C.accent}28`, borderRadius: 12, padding: "13px 16px" }}>
                 <div style={{ fontSize: 12, color: C.accent, fontWeight: 700, marginBottom: 4, textTransform: "uppercase", letterSpacing: 1 }}>✦ Why We Ask This</div>
                 <div style={{ fontSize: 13, color: C.textMuted, lineHeight: 1.6 }}>Active investors can tolerate more volatility because they're watching and reacting. Passive investors need picks that hold value on their own — this tells us how much maintenance your portfolio should require.</div>
-              </div>
-
-              {/* Employment */}
-              <div>
-                <label style={{ display: "block", fontWeight: 700, marginBottom: 10, fontSize: 15 }}>Employment Status</label>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10 }}>
-                  {[
-                    {
-                      val: "employed", label: "Employed", sub: "Stable income",
-                      detail: "A steady paycheck means you can afford to stay invested through market dips without needing to pull funds. This gives your portfolio more room to take on calculated risk and recover over time.",
-                    },
-                    {
-                      val: "self-employed", label: "Self-Employed", sub: "Variable income",
-                      detail: "With variable income, liquidity matters more. We'll be mindful of not over-concentrating in highly illiquid or volatile positions — your portfolio should complement your income unpredictability, not amplify it.",
-                    },
-                    {
-                      val: "other", label: "Other", sub: "Student / retired",
-                      detail: "Whether you're a student building early habits or retired and preserving wealth, your portfolio will reflect a more conservative, stability-first approach — protecting what you have while still growing steadily.",
-                    },
-                  ].map(o => <ExpandableOptionCard key={o.val} {...o} selected={profile.employment === o.val} onClick={() => up("employment", o.val)} />)}
-                </div>
-              </div>
-
-              {/* Age */}
-              <div>
-                <label style={{ display: "block", fontWeight: 700, marginBottom: 10, fontSize: 15 }}>Age Range</label>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10 }}>
-                  {[
-                    { val: "18-30", label: "18–30", sub: "Early career" },
-                    { val: "31-50", label: "31–50", sub: "Mid career" },
-                    { val: "51+", label: "51+", sub: "Pre-retirement" },
-                  ].map(o => <OptionCard key={o.val} label={o.label} subtitle={o.sub} selected={profile.age === o.val} onClick={() => up("age", o.val)} />)}
-                </div>
-              </div>
-
-              {/* Why we ask — personal context */}
-              <div style={{ background: `${C.accent}10`, border: `1px solid ${C.accent}28`, borderRadius: 12, padding: "13px 16px" }}>
-                <div style={{ fontSize: 12, color: C.accent, fontWeight: 700, marginBottom: 4, textTransform: "uppercase", letterSpacing: 1 }}>✦ Why We Ask This</div>
-                <div style={{ fontSize: 13, color: C.textMuted, lineHeight: 1.6 }}>Your employment and age help us understand your financial stability and life stage. A stable income allows for more flexibility — your age tells us how much time your portfolio has to grow or recover from market swings.</div>
               </div>
 
             </div>
@@ -1070,7 +1134,6 @@ export default function App() {
               {ALL_INDUSTRIES.map(ind => {
                 const selected = profile.industries.includes(ind);
                 const color = INDUSTRY_COLORS[ind];
-                const pref = profile.industryWeights?.[ind] ?? 50;
 
                 const icons = {
                   Technology: (
@@ -1123,12 +1186,7 @@ export default function App() {
                     transition: "all 0.18s",
                   }} className="nova-industry-card">
                     {/* Main card click area */}
-                    <div onClick={() => {
-                      toggleIndustry(ind);
-                      if (!selected) {
-                        up("industryWeights", { ...(profile.industryWeights || {}), [ind]: 50 });
-                      }
-                    }} style={{ padding: "16px 18px", cursor: "pointer" }}>
+                    <div onClick={() => toggleIndustry(ind)} style={{ padding: "16px 18px", cursor: "pointer" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 5 }}>
                         {icons[ind]}
                         <span style={{ fontWeight: 800, fontSize: 15, color: selected ? color : C.text }}>{ind}</span>
@@ -1137,37 +1195,6 @@ export default function App() {
                       <div style={{ fontSize: 12, color: C.textMuted }}>{descriptions[ind]}</div>
                     </div>
 
-                    {/* Preference slider — only when selected */}
-                    {selected && (
-                      <div style={{ padding: "10px 18px 14px", borderTop: `1px solid ${color}30`, background: `${color}08` }}>
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
-                          <span style={{ fontSize: 11, color: color, fontWeight: 700, textTransform: "uppercase", letterSpacing: 1 }}>Conviction Level</span>
-                          <span style={{ fontSize: 12, fontWeight: 800, color }}>
-                            {pref <= 25 ? "Low" : pref <= 50 ? "Moderate" : pref <= 75 ? "High" : "Max"}
-                          </span>
-                        </div>
-                        <style>{`
-                          .ind-slider-${ind.toLowerCase()} { -webkit-appearance: none; appearance: none; width: 100%; height: 5px; border-radius: 3px; outline: none; cursor: pointer; background: linear-gradient(90deg, ${color} ${pref}%, #1E2D45 ${pref}%); }
-                          .ind-slider-${ind.toLowerCase()}::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: ${color}; border: 2px solid #fff; box-shadow: 0 0 8px ${color}60; cursor: pointer; }
-                          .ind-slider-${ind.toLowerCase()}::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; background: ${color}; border: 2px solid #fff; cursor: pointer; }
-                        `}</style>
-                        <input
-                          type="range"
-                          className={`ind-slider-${ind.toLowerCase()}`}
-                          min={1} max={100} step={1}
-                          value={pref}
-                          onClick={e => e.stopPropagation()}
-                          onChange={e => {
-                            e.stopPropagation();
-                            up("industryWeights", { ...(profile.industryWeights || {}), [ind]: parseInt(e.target.value) });
-                          }}
-                        />
-                        <div style={{ display: "flex", justifyContent: "space-between", marginTop: 4 }}>
-                          <span style={{ fontSize: 10, color: C.textSubtle }}>Lower weight</span>
-                          <span style={{ fontSize: 10, color: C.textSubtle }}>Higher weight</span>
-                        </div>
-                      </div>
-                    )}
                   </div>
                 );
               })}
@@ -1415,14 +1442,12 @@ export default function App() {
                 {expandedIndustry === ind && stocks.map(stock => {
                   const rl = getRiskLabel(stock.risk);
                   const reason = getRecommendationReason(stock, profile, portfolio.riskScore);
-                  const allocPerStock = Math.round(parseFloat(profile.equity) * portfolio.allocationMap[ind] / 100 / stocks.length);
                   return (
                     <StockCard
                       key={stock.ticker}
                       stock={stock}
                       rl={rl}
                       reason={reason}
-                      allocPerStock={allocPerStock}
                       profile={profile}
                       riskScore={portfolio.riskScore}
                     />
@@ -1451,7 +1476,6 @@ export default function App() {
                   `Goal: ${profile.goal}`,
                   `Risk Tolerance: ${profile.riskTolerance}`,
                   `Timeline: ${profile.timeline}`,
-                  `Income Style: ${profile.incomeStyle || "Not specified"}`,
                   `Investment Style: ${profile.investmentStyle || "Not specified"}`,
                   ``,
                   `── PORTFOLIO HEALTH ──`,
@@ -1467,7 +1491,7 @@ export default function App() {
                   ...Object.entries(portfolio.stockPicks).flatMap(([ind, stocks]) => [
                     ``,
                     `${ind}:`,
-                    ...stocks.map(s => `  ${s.ticker} — ${s.name} | Risk: ${s.risk} | Dividend: ${s.dividendYield}% | $${Math.round(parseFloat(profile.equity) * portfolio.allocationMap[ind] / 100 / stocks.length).toLocaleString()} suggested`)
+                    ...stocks.map(s => `  ${s.ticker} — ${s.name} | Risk: ${s.risk} | Dividend: ${s.dividendYield}%`)
                   ]),
                   ``,
                   `── DISCLAIMER ──`,
